@@ -29,9 +29,13 @@ docker image build dockerfile = construir uma imagem a partir de um arquivo cham
 
 Um tópico muito importante é a existência de redes dentro do docker, dentre elas, tem-se None, Bridge e Host.
 - Network:
+
 - 1- Tipo None têm como características a não conexão com a rede externa nem entre os próprios containers.
+- 
 - 2- Tipo Bridge é a rede padrão (default) e apresenta uma interface de rede para realizar a comunicação da rede do container com a rede externa.
+
 - 3- Tipo Host não possui interface de rede intermediando a comunicação entre a rede do container e a rede externa, isto é, a comunicação é feita direto entre rede do container e rede externa.
+- 
 
 Dentre os principais comandos de network, tem-se:
 

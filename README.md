@@ -64,45 +64,6 @@ docker exec -it <nomecontainer> ifconfig = verificar a rede existente no contain
 
 Diante desses conceitos o mais utilizado é o docker compose que nada mais é que um arquivo yaml que declara o que será criado, possibilitando, assim, criar mais de um recurso ao mesmo tempo em um mesmo arquivo.
 
-Um exemplo simples, colocado abaixo, representa o que foi explicado até o momento e pode ser encontrado na documentação do docker.
-
-services:
-  frontend:
-    image: awesome/webapp
-    ports:
-      - "443:8043"
-    networks:
-      - front-tier
-      - back-tier
-    configs:
-      - httpd-config
-    secrets:
-      - server-certificate
-
-  backend:
-    image: awesome/database
-    volumes:
-      - db-data:/etc/data
-    networks:
-      - back-tier
-
-volumes:
-  db-data:
-    driver: flocker
-    driver_opts:
-      size: "10GiB"
-
-configs:
-  httpd-config:
-    external: true
-
-secrets:
-  server-certificate:
-    external: true
-
-networks:
-  # The presence of these objects is sufficient to define them
-  front-tier: {}
-  back-tier: {}
+Um exemplo simples, colocado abaixo, representa o que foi explicado até o momento e pode ser encontrado na documentação do docker disponível em https://docs.docker.com/compose/compose-file/02-model/.
 
 A partir do docker-compose up -d será baixado, construído e executado tudo o que foi criado no arquivo de configuração, sendo possível verificar seu status executando docker-compose ps e, para encerrá-lo, basta executar docker-compose down.

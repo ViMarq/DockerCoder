@@ -41,13 +41,12 @@ docker image tag <nomeimagem> <novatag> = escolher nome da tag que deseja para u
 docker image build dockerfile = construir uma imagem a partir de um arquivo chamado dockerfile criado
 
 Um tópico muito importante é a existência de redes dentro do docker, dentre elas, tem-se None, Bridge e Host.
-- Network:
-    
-    - 1) Tipo None têm como características a não conexão com a rede externa nem entre os próprios containers.
-    
-    - 2) Tipo Bridge é a rede padrão (default) e apresenta uma interface de rede para realizar a comunicação da rede do container com a rede externa.
-    
-    - 3) Tipo Host não possui interface de rede intermediando a comunicação entre a rede do container e a rede externa, isto é, a comunicação é feita direto entre rede do container e rede externa.
+
+1) Tipo None têm como características a não conexão com a rede (network) externa nem entre os próprios containers.
+
+2) Tipo Bridge é a rede padrão (default) e apresenta uma interface de rede para realizar a comunicação da rede do container com a rede externa.
+
+3) Tipo Host não possui interface de rede intermediando a comunicação entre a rede do container e a rede externa, isto é, a comunicação é feita direto entre rede do container e rede externa.
 
 Dentre os principais comandos de network, tem-se:
 
@@ -68,43 +67,74 @@ Diante desses conceitos o mais utilizado é o docker compose que nada mais é qu
 Um exemplo simples, colocado abaixo, representa o que foi explicado até o momento e pode ser encontrado na documentação do docker.
 
 services:
+
   frontend:
+  
     image: awesome/webapp
+    
     ports:
+    
       - "443:8043"
+      
     networks:
+    
       - front-tier
+      
       - back-tier
+      
     configs:
+    
       - httpd-config
+      
     secrets:
+    
       - server-certificate
+      
 
   backend:
+  
     image: awesome/database
+    
     volumes:
+    
       - db-data:/etc/data
+      
     networks:
+    
       - back-tier
+      
 
 volumes:
+
   db-data:
+  
     driver: flocker
+    
     driver_opts:
+    
       size: "10GiB"
+      
 
 configs:
+
   httpd-config:
+  
     external: true
+    
 
 secrets:
+
   server-certificate:
+  
     external: true
+    
 
 networks:
 
-  front-tier: {}
-  back-tier: {}
 
+  front-tier: {}
+  
+  back-tier: {}
+  
 
 A partir do docker-compose up -d será baixado, construído e executado tudo o que foi criado no arquivo de configuração, sendo possível verificar seu status executando docker-compose ps e, para encerrá-lo, basta executar docker-compose down.

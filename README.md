@@ -67,74 +67,42 @@ Diante desses conceitos o mais utilizado é o docker compose que nada mais é qu
 Um exemplo simples, colocado abaixo, representa o que foi explicado até o momento e pode ser encontrado na documentação do docker.
 
 services:
-
   frontend:
-  
     image: awesome/webapp
-    
     ports:
-    
       - "443:8043"
-      
     networks:
-    
       - front-tier
-      
       - back-tier
-      
     configs:
-    
       - httpd-config
-      
     secrets:
-    
       - server-certificate
-      
 
   backend:
-  
     image: awesome/database
-    
     volumes:
-    
       - db-data:/etc/data
-      
     networks:
-    
       - back-tier
-      
 
 volumes:
-
   db-data:
-  
     driver: flocker
-    
     driver_opts:
-    
       size: "10GiB"
-      
 
 configs:
-
   httpd-config:
-  
     external: true
-    
 
 secrets:
-
   server-certificate:
-  
     external: true
-    
 
 networks:
-
-
+  # The presence of these objects is sufficient to define them
   front-tier: {}
-  
   back-tier: {}
-  
 
 A partir do docker-compose up -d será baixado, construído e executado tudo o que foi criado no arquivo de configuração, sendo possível verificar seu status executando docker-compose ps e, para encerrá-lo, basta executar docker-compose down.
